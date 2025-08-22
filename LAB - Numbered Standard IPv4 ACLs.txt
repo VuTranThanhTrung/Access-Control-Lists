@@ -1,0 +1,44 @@
+Configure Numbered Standard IPv4 ACLs
+
+R2:
+access-list 1 deny 192.168.11.0  0.0.0.255
+access-list 1 permit any
+
+int g0/0
+ ip access-group 1 out
+
+***********************************************
+R2#show access-lists
+Standard IP access list 1
+	10 deny 192.168.11.0 0.0.0.255
+	20 permit any
+
+***********************************************
+
+R3:
+access-list 1 deny 192.168.10.0  0.0.0.255
+access-list 1 permit any
+
+int g0/0
+ ip access-group 1 out
+
+***********************************************
+R3#show access-lists
+Standard IP access list 1
+	10 deny 192.168.10.0 0.0.0.255
+	20 permit any
+
+***********************************************
+  A ping from 192.168.10.10 to 192.168.11.10 succeeds.
+
+  A ping from 192.168.10.10 to 192.168.20.254 succeeds.
+
+  A ping from 192.168.11.10 to 192.168.20.254 fails.
+
+  A ping from 192.168.10.10 to 192.168.30.10 fails.
+
+  A ping from 192.168.11.10 to 192.168.30.10 succeeds.
+
+  A ping from 192.168.30.10 to 192.168.20.254 succeeds.
+**************************************************
+
